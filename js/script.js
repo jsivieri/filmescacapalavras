@@ -207,7 +207,6 @@ function abrirModal(filme) {
     
     // Processa a sinopse
     const sinopse = filme.overview || 'Sinopse não disponível.';
-    modalSinopse.innerHTML = `<p>${sinopse}</p>`;
     
     // Seleciona 20 palavras da sinopse com mais de 5 letras
     const palavras = sinopse.split(/\s+/)
@@ -238,15 +237,22 @@ function abrirModal(filme) {
         }
     }
     
-    // Cria a lista enumerada de palavras
+    // Destaca as palavras selecionadas na sinopse (nova parte adicionada)
+    let sinopseFormatada = sinopse;
+    palavrasSelecionadas.forEach(palavra => {
+        const regex = new RegExp(`\\b${palavra}\\b`, 'gi');
+        sinopseFormatada = sinopseFormatada.replace(regex, match => `<strong>${match}</strong>`);
+    });
+    
+    modalSinopse.innerHTML = `<p>${sinopseFormatada}</p>`;
+    
+    // Restante do código permanece EXATAMENTE igual
     const listaPalavrasHTML = palavrasSelecionadas.map((palavra, index) => 
         `<li id="palavra-${index}" data-palavra="${palavra}" style="text-decoration: none;">${index + 1}. ${palavra}</li>`
     ).join('');
     
-    // Cria o caça-palavras
     const grade = criarCacaPalavras(palavrasSelecionadas);
     
-    // Cria a tabela HTML do caça-palavras
     let tabelaHTML = '<table id="caca-palavras">';
     for (let y = 0; y < 30; y++) {
         tabelaHTML += '<tr>';
@@ -257,7 +263,6 @@ function abrirModal(filme) {
     }
     tabelaHTML += '</table>';
     
-    // Adiciona a lista e o caça-palavras ao modal
     jogoContainer.innerHTML = `
         <h3>Palavras para encontrar (${palavrasSelecionadas.length}):</h3>
         <ol id="lista-palavras">${listaPalavrasHTML}</ol>
@@ -265,7 +270,6 @@ function abrirModal(filme) {
         ${tabelaHTML}
     `;
     
-    // Configura a seleção de palavras
     configurarSelecao(palavrasSelecionadas);
     
     filmeModal.style.display = 'flex';
