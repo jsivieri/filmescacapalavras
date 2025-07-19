@@ -15,27 +15,16 @@ const cores = [
 ];
 
 // Função para randomizar as imagens
-async function randomizarImagens() {
-    const imagensDisponiveis = [];
+function randomizarImagens() {
+    // Lista das imagens que realmente existem (atualize conforme suas imagens)
+    const imagensExistentes = [
+        '01', '02', '03', '04' // Adicione os números das imagens que você tem
+    ];
     
-    // Verifica quais imagens existem de 01 a 99
-    for (let i = 1; i <= 99; i++) {
-        const numeroFormatado = i.toString().padStart(2, '0');
-        const src = `images/image${numeroFormatado}1200x628.png`;
-        
-        try {
-            // Verifica se a imagem existe
-            const response = await fetch(src, { method: 'HEAD' });
-            if (response.ok) {
-                imagensDisponiveis.push({
-                    src: src,
-                    alt: `Imagem ${numeroFormatado}`
-                });
-            }
-        } catch (error) {
-            // Imagem não existe, ignora
-        }
-    }
+    const imagensDisponiveis = imagensExistentes.map(numero => ({
+        src: `images/image${numero}1200x628.png`,
+        alt: `Imagem ${numero}`
+    }));
     
     // Embaralha o array de imagens disponíveis
     for (let i = imagensDisponiveis.length - 1; i > 0; i--) {
@@ -47,10 +36,10 @@ async function randomizarImagens() {
 }
 
 // Função para inserir imagens randomizadas no jogo
-async function inserirImagensJogo() {
+function inserirImagensJogo() {
     const jogoImageGallery = document.getElementById('jogoImageGallery');
     if (jogoImageGallery) {
-        const imagensRandomizadas = await randomizarImagens();
+        const imagensRandomizadas = randomizarImagens();
         jogoImageGallery.innerHTML = '';
         
         // Adiciona até 4 imagens aleatórias disponíveis
@@ -501,7 +490,7 @@ function inicializarJogo() {
 }
 
 // Inicializa o jogo quando a página carrega
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     inicializarJogo();
-    await inserirImagensJogo();
+    inserirImagensJogo();
 });
