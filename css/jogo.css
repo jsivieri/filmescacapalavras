@@ -1,0 +1,410 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(155, 89, 182, 0.9));
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.jogo-container {
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.jogo-main {
+    display: flex;
+    gap: 5px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    min-height: calc(100vh - 40px);
+}
+
+.jogo-left {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filme-poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.filme-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filme-data, .filme-genero, .filme-avaliacao {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filme-sinopse {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    flex: 1;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.jogo-center {
+    flex: 0 0 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.palavras-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.palavras-container h3 {
+    color: #2c3e50;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+#listaPalavras {
+    columns: 1;
+    column-gap: 15px;
+    padding: 0;
+    list-style-position: inside;
+    flex: 1;
+    overflow-y: auto;
+    margin: 0;
+}
+
+#listaPalavras li {
+    margin-bottom: 3px;
+    transition: all 0.3s;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 5px;
+    border-radius: 4px;
+    break-inside: avoid;
+    cursor: pointer;
+}
+
+#listaPalavras li:hover {
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.jogo-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.grade-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+.jogo-extra {
+    flex: 0 0 240px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.jogo-image-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.jogo-gallery-image {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.jogo-gallery-image:hover {
+    transform: translateY(-3px);
+}
+
+.jogo-gallery-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Estilos para o caça-palavras - otimizado para tela cheia */
+#caca-palavras {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0 auto;
+    border: 3px solid #34495e;
+    border-radius: 12px;
+    overflow: visible;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    background: white;
+    width: fit-content;
+    height: fit-content;
+    aspect-ratio: 1;
+}
+
+#caca-palavras td {
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    position: relative;
+    background: transparent;
+    font-weight: normal;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    line-height: 18px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#caca-palavras td:hover {
+    background: rgba(52, 152, 219, 0.1);
+    transform: scale(1.05);
+    z-index: 1;
+}
+
+.botao-sos-container {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.botao-sos {
+    width: 80%;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.botao-sos:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(231, 76, 60, 0.5);
+}
+
+.botao-sos:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+}
+
+/* Estilos para células selecionadas e encontradas */
+.celula-selecionada {
+    background: linear-gradient(135deg, #3498db, #2980b9) !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+    transform: scale(1.1);
+    z-index: 2;
+    position: relative;
+}
+
+.celula-encontrada {
+    font-weight: bold !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    z-index: 1;
+    position: relative;
+}
+
+.palavra-encontrada {
+    text-decoration: line-through !important;
+    opacity: 0.8;
+    transform: scale(0.95);
+    background: rgba(46, 204, 113, 0.2) !important;
+}
+
+.palavra-sinopse {
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Efeito de pulsação */
+@keyframes pulsar {
+    0% {
+        color: #3498db;
+        text-shadow: 0 0 5px rgba(52, 152, 219, 0.7);
+        transform: scale(1);
+    }
+    50% {
+        color: #2980b9;
+        text-shadow: 0 0 15px rgba(52, 152, 219, 0.9);
+        transform: scale(1.2);
+    }
+    100% {
+        color: #3498db;
+        text-shadow: 0 0 5px rgba(52, 152, 219, 0.7);
+        transform: scale(1);
+    }
+}
+
+.pulsar {
+    animation: pulsar 1s infinite;
+    font-weight: bold !important;
+}
+
+/* Responsividade */
+@media (max-width: 1400px) {
+    .jogo-main {
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .jogo-left {
+        flex: 0 0 220px;
+    }
+    
+    .jogo-center {
+        flex: 0 0 180px;
+    }
+    
+    #caca-palavras td {
+        width: 18px;
+        height: 18px;
+        font-size: 13px;
+        line-height: 18px;
+        border: none;
+    }
+}
+
+@media (max-width: 1200px) {
+    .jogo-main {
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .jogo-left {
+        flex: 0 0 200px;
+    }
+    
+    .jogo-center {
+        flex: 0 0 160px;
+    }
+    
+    #caca-palavras td {
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 16px;
+        border: none;
+    }
+    
+    .filme-poster {
+        height: 250px;
+    }
+}
+
+@media (max-width: 900px) {
+    .jogo-main {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .jogo-left {
+        flex: none;
+        display: none; /* Esconde informações do filme em telas pequenas */
+    }
+    
+    .jogo-center {
+        flex: none;
+        order: 1;
+        height: 200px;
+    }
+    
+    .jogo-right {
+        flex: 1;
+        order: 2;
+    }
+    
+    .jogo-extra {
+        flex: none;
+        order: 3;
+        padding-left: 0;
+        margin-top: 15px;
+    }
+    
+    .jogo-image-gallery {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .jogo-gallery-image {
+        flex: 0 0 180px;
+    }
+    
+    #caca-palavras td {
+        width: 14px;
+        height: 14px;
+        font-size: 11px;
+        line-height: 14px;
+        border: none;
+    }
+    
+    .botao-sos-container {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        margin-top: 10px;
+    }
+}

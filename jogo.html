@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça-Palavras - Filme</title>
+    <link rel="stylesheet" href="css/jogo.css">
+</head>
+<body>
+    <div class="jogo-container">
+        <div class="jogo-main">
+            <!-- Coluna esquerda: Informações do filme -->
+            <div class="jogo-left">
+                <img class="filme-poster" id="filmePoster" alt="Poster do filme">
+                <div class="filme-info">
+                    <div class="filme-data" id="filmeData"></div>
+                    <div class="filme-genero" id="filmeGenero"></div>
+                    <div class="filme-avaliacao" id="filmeAvaliacao"></div>
+                </div>
+                <div class="filme-sinopse" id="filmeSinopse"></div>
+            </div>
+            
+            <!-- Coluna central: Lista de palavras -->
+            <div class="jogo-center">
+                <div class="palavras-container" id="palavrasContainer">
+                    <h3>PALAVRAS:</h3>
+                    <div class="botao-sos-container">
+                        <button id="botaoSos" class="botao-sos" onclick="ajudarComPalavra()">SOS</button>
+                    </div>
+                    <ol id="listaPalavras"></ol>
+                </div>
+            </div>
+            
+            <!-- Coluna direita: Grade do jogo -->
+            <div class="jogo-right">
+                <div class="grade-container" id="gradeContainer">
+                    <!-- A grade será inserida aqui via JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Coluna extra: Galeria de imagens -->
+            <div class="jogo-extra">
+                <div class="jogo-image-gallery" id="jogoImageGallery">
+                    <!-- Imagens serão inseridas aqui via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/jogo.js"></script>
+</body>
+</html>

@@ -8,32 +8,50 @@
 </head>
 <body>
     <div class="container">
-        <h1>Catálogo de Filmes Populares</h1>
+        <h1>Caça Palavras</h1>
         
-        <div class="filmes-container" id="filmesContainer">
-            <div class="carregando">Carregando filmes...</div>
-        </div>
-        
-        <div class="paginacao">
-            <button id="paginaAnterior">Anterior</button>
-            <span id="numeroPagina">Página 1</span>
-            <button id="proximaPagina">Próxima</button>
+        <div class="main-layout">
+            <div class="left-section">
+                <div class="filmes-container" id="filmesContainer">
+                    <div class="carregando">Carregando filmes...</div>
+                </div>
+                
+                <div class="paginacao">
+                    <button id="paginaAnterior">Anterior</button>
+                    <span id="numeroPagina">Página 1</span>
+                    <button id="proximaPagina">Próxima</button>
+                </div>
+            </div>
+            
+            <div class="right-section">
+                <div class="image-gallery" id="imageGallery">
+                    <!-- Imagens serão inseridas aqui via JavaScript -->
+                </div>
+            </div>
         </div>
     </div>
     
     <div class="modal" id="filmeModal">
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
-            <img class="modal-poster" id="modalPoster" src="" alt="Poster do filme">
-            <h2 class="modal-titulo" id="modalTitulo"></h2>
-            <div class="modal-info">
-                <span class="modal-info-item" id="modalData"></span>
-                <span class="modal-info-item" id="modalGenero"></span>
-                <span class="modal-info-item" id="modalAvaliacao"></span>
+            <div class="modal-main">
+                <div class="modal-left">
+                    <img class="modal-poster" id="modalPoster" src="" alt="Poster do filme">
+                    <h2 class="modal-titulo" id="modalTitulo"></h2>
+                    <div class="modal-info">
+                        <span class="modal-info-item" id="modalData"></span>
+                        <span class="modal-info-item" id="modalGenero"></span>
+                        <span class="modal-info-item" id="modalAvaliacao"></span>
+                    </div>
+                    <div class="modal-sinopse" id="modalSinopse"></div>
+                </div>
+                <div class="modal-center">
+                    <div class="palavras-container" id="palavras-container"></div>
+                </div>
+                <div class="modal-right">
+                    <div id="jogo-container"></div>
+                </div>
             </div>
-            <h3>Sinopse</h3>
-            <p class="modal-sinopse" id="modalSinopse"></p>
-            <div id="jogo-container"></div>
         </div>
     </div>
     
