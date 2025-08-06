@@ -140,6 +140,77 @@ body {
     align-items: flex-start;
     padding: 0;
     margin: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    position: relative;
+}
+
+.instrucao-nivel {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+}
+
+.nivel-facil-texto {
+    color: #27ae60;
+    animation: piscar-verde 1.5s infinite;
+}
+
+.nivel-medio-texto {
+    color: #f39c12;
+    animation: piscar-amarelo 1.5s infinite;
+}
+
+.nivel-dificil-texto {
+    color: #e74c3c;
+    animation: piscar-vermelho 1.5s infinite;
+}
+
+@keyframes piscar-verde {
+    0%, 50% { 
+        color: #27ae60;
+        text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+    }
+    51%, 100% { 
+        color: #2ecc71;
+        text-shadow: 0 0 15px rgba(39, 174, 96, 0.8);
+    }
+}
+
+@keyframes piscar-amarelo {
+    0%, 50% { 
+        color: #f39c12;
+        text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+    }
+    51%, 100% { 
+        color: #e67e22;
+        text-shadow: 0 0 15px rgba(243, 156, 18, 0.8);
+    }
+}
+
+@keyframes piscar-vermelho {
+    0%, 50% { 
+        color: #e74c3c;
+        text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+    }
+    51%, 100% { 
+        color: #c0392b;
+        text-shadow: 0 0 15px rgba(231, 76, 60, 0.8);
+    }
+}
+
+.mostrar-instrucao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .jogo-extra {
@@ -188,6 +259,29 @@ body {
     width: fit-content;
     height: fit-content;
     aspect-ratio: 1;
+    transition: border-color 0.3s ease;
+}
+
+/* Bordas coloridas conforme o nível de dificuldade */
+#caca-palavras.nivel-facil {
+    border-color: #27ae60;
+    box-shadow: 
+        0 8px 25px rgba(39, 174, 96, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+#caca-palavras.nivel-medio {
+    border-color: #f39c12;
+    box-shadow: 
+        0 8px 25px rgba(243, 156, 18, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+#caca-palavras.nivel-dificil {
+    border-color: #e74c3c;
+    box-shadow: 
+        0 8px 25px rgba(231, 76, 60, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 #caca-palavras td {
@@ -213,6 +307,75 @@ body {
     z-index: 1;
 }
 
+.botoes-dificuldade-container {
+    margin: 10px 0;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.botao-dificuldade {
+    flex: 1;
+    height: 32px;
+    border-radius: 8px;
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.botao-facil {
+    background: linear-gradient(135deg, #27ae60, #229954);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.botao-facil:hover {
+    background: linear-gradient(135deg, #229954, #1e8449);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(39, 174, 96, 0.5);
+}
+
+.botao-facil:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.4);
+}
+
+.botao-medio {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+}
+
+.botao-medio:hover {
+    background: linear-gradient(135deg, #e67e22, #d68910);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(243, 156, 18, 0.5);
+}
+
+.botao-medio:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(243, 156, 18, 0.4);
+}
+
+.botao-dificil {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.botao-dificil:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(231, 76, 60, 0.5);
+}
+
+.botao-dificil:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+}
+
 .botao-sos-container {
     margin: 10px 0;
     text-align: center;
@@ -222,27 +385,27 @@ body {
     width: 80%;
     height: 32px;
     border-radius: 8px;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
     color: white;
     border: none;
     font-weight: bold;
     font-size: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .botao-sos:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
+    background: linear-gradient(135deg, #7f8c8d, #6c7b7d);
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(231, 76, 60, 0.5);
+    box-shadow: 0 6px 18px rgba(149, 165, 166, 0.5);
 }
 
 .botao-sos:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    box-shadow: 0 2px 8px rgba(149, 165, 166, 0.4);
 }
 
 /* Estilos para células selecionadas e encontradas */

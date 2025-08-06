@@ -5,6 +5,8 @@ let corAtual = 0;
 let palavrasComCores = new Map();
 let gradeAtual = null;
 let palavrasNaGrade = new Map(); // Armazena posições das palavras na grade
+let nivelDificuldade = null; // Nível de dificuldade selecionado
+let jogoIniciado = false; // Flag para controlar se o jogo foi iniciado
 
 // Cores para as palavras encontradas
 const cores = [
@@ -51,6 +53,40 @@ function inserirImagensJogo() {
             jogoImageGallery.appendChild(galleryImage);
         }
     }
+}
+
+// Função global para definir dificuldade
+function definirDificuldade(nivel) {
+    // Se o jogo já foi iniciado, pergunta se o usuário tem certeza
+    if (jogoIniciado) {
+        const confirmacao = confirm(
+            "⚠️ ATENÇÃO!\n\n" +
+            "Você tem certeza que deseja alterar o nível de dificuldade?\n\n" +
+            "Esta ação irá reiniciar completamente seu progresso atual.\n" +
+            "Todas as palavras encontradas serão perdidas.\n\n" +
+            "Deseja continuar?"
+        );
+        
+        if (!confirmacao) {
+            return; // Cancela a alteração se o usuário não confirmar
+        }
+        
+        // Reset das variáveis do jogo
+        palavrasEncontradas = 0;
+        corAtual = 0;
+        palavrasComCores.clear();
+        palavrasNaGrade.clear();
+        palavrasAtivas = [];
+    }
+    
+    nivelDificuldade = nivel;
+    jogoIniciado = true;
+    
+    // Remove o texto piscando
+    document.getElementById('gradeContainer').classList.remove('mostrar-instrucao');
+    
+    // Inicia o jogo com o nível selecionado
+    criarJogoComDificuldade();
 }
 
 // Função global para ajuda (chamada pelo onclick)
@@ -121,17 +157,35 @@ function criarCacaPalavras(palavrasSelecionadas) {
     let grade = Array(tamanhoGradeY).fill().map(() => Array(tamanhoGradeX).fill(''));
     palavrasNaGrade.clear(); // Limpa as posições das palavras anteriores
     
-    // Direções possíveis (8 direções)
-    const direcoes = [
-        { x: 1, y: 0 },   // Direita
-        { x: 0, y: 1 },   // Baixo
-        { x: 1, y: 1 },   // Diagonal inferior direita
-        { x: 1, y: -1 },  // Diagonal superior direita
-        { x: -1, y: 0 },  // Esquerda
-        { x: 0, y: -1 },  // Cima
-        { x: -1, y: -1 }, // Diagonal superior esquerda
-        { x: -1, y: 1 }   // Diagonal inferior esquerda
-    ];
+    // Define direções baseadas no nível de dificuldade
+    let direcoes;
+    if (nivelDificuldade === 'facil') {
+        // Fácil: apenas horizontal (esquerda para direita) e vertical (cima para baixo)
+        direcoes = [
+            { x: 1, y: 0 },   // Direita
+            { x: 0, y: 1 }    // Baixo
+        ];
+    } else if (nivelDificuldade === 'medio') {
+        // Médio: horizontal, vertical e diagonais (apenas da esquerda para direita)
+        direcoes = [
+            { x: 1, y: 0 },   // Direita
+            { x: 0, y: 1 },   // Baixo
+            { x: 1, y: 1 },   // Diagonal inferior direita
+            { x: 1, y: -1 }   // Diagonal superior direita
+        ];
+    } else {
+        // Difícil: todas as direções
+        direcoes = [
+            { x: 1, y: 0 },   // Direita
+            { x: 0, y: 1 },   // Baixo
+            { x: 1, y: 1 },   // Diagonal inferior direita
+            { x: 1, y: -1 },  // Diagonal superior direita
+            { x: -1, y: 0 },  // Esquerda
+            { x: 0, y: -1 },  // Cima
+            { x: -1, y: -1 }, // Diagonal superior esquerda
+            { x: -1, y: 1 }   // Diagonal inferior esquerda
+        ];
+    }
     
     // Insere as palavras na grade
     palavrasSelecionadas.forEach(palavra => {
@@ -390,8 +444,8 @@ function configurarSelecao(palavrasSelecionadas) {
     });
 }
 
-// Função para inicializar o jogo
-function inicializarJogo() {
+// Função para criar o jogo com a dificuldade selecionada
+function criarJogoComDificuldade() {
     // Obtém os dados do filme da URL
     const dadosFilmeCodificados = obterParametroURL('filme');
     
@@ -409,14 +463,6 @@ function inicializarJogo() {
         window.close();
         return;
     }
-    
-    // Preenche as informações do filme
-    document.getElementById('filmePoster').src = filme.poster_path 
-        ? `https://image.tmdb.org/t/p/w500${filme.poster_path}` 
-        : 'https://via.placeholder.com/300x450?text=Poster+Não+Disponível';
-    document.getElementById('filmeData').textContent = filme.release_date || 'Data desconhecida';
-    document.getElementById('filmeGenero').textContent = filme.generosFormatados;
-    document.getElementById('filmeAvaliacao').textContent = `⭐ ${filme.vote_average ? filme.vote_average.toFixed(1) : 'N/A'}/10`;
     
     // Processa a sinopse
     const sinopse = filme.overview || 'Sinopse não disponível.';
@@ -473,7 +519,7 @@ function inicializarJogo() {
     // Cria a grade do caça-palavras
     const grade = criarCacaPalavras(palavrasSelecionadas);
     
-    let tabelaHTML = '<table id="caca-palavras">';
+    let tabelaHTML = '<table id="caca-palavras" class="nivel-' + nivelDificuldade + '">';
     for (let y = 0; y < 20; y++) {
         tabelaHTML += '<tr>';
         for (let x = 0; x < 30; x++) {
@@ -487,6 +533,49 @@ function inicializarJogo() {
     
     // Configura a seleção de palavras
     configurarSelecao(palavrasSelecionadas);
+}
+
+// Função para inicializar o jogo
+function inicializarJogo() {
+    // Obtém os dados do filme da URL
+    const dadosFilmeCodificados = obterParametroURL('filme');
+    
+    if (!dadosFilmeCodificados) {
+        alert('Erro: dados do filme não encontrados!');
+        window.close();
+        return;
+    }
+    
+    let filme;
+    try {
+        filme = JSON.parse(decodeURIComponent(dadosFilmeCodificados));
+    } catch (error) {
+        alert('Erro ao decodificar dados do filme!');
+        window.close();
+        return;
+    }
+    
+    // Preenche as informações do filme
+    document.getElementById('filmePoster').src = filme.poster_path 
+        ? `https://image.tmdb.org/t/p/w500${filme.poster_path}` 
+        : 'https://via.placeholder.com/300x450?text=Poster+Não+Disponível';
+    document.getElementById('filmeData').textContent = filme.release_date || 'Data desconhecida';
+    document.getElementById('filmeGenero').textContent = filme.generosFormatados;
+    document.getElementById('filmeAvaliacao').textContent = `⭐ ${filme.vote_average ? filme.vote_average.toFixed(1) : 'N/A'}/10`;
+    
+    // Processa a sinopse
+    const sinopse = filme.overview || 'Sinopse não disponível.';
+    document.getElementById('filmeSinopse').innerHTML = sinopse;
+    
+    // Exibe a instrução piscando na grade
+    const textoInstrucao = `
+        CLIQUE EM UM DOS BOTÕES AO LADO PARA ESCOLHER:<br><br>
+        <span class="nivel-facil-texto">FÁCIL</span>, 
+        <span class="nivel-medio-texto">MÉDIO</span> OU 
+        <span class="nivel-dificil-texto">DIFÍCIL</span>
+    `;
+    document.getElementById('gradeContainer').innerHTML = '<div class="instrucao-nivel">' + textoInstrucao + '</div>';
+    document.getElementById('gradeContainer').classList.add('mostrar-instrucao');
 }
 
 // Inicializa o jogo quando a página carrega
