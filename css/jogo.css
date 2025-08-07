@@ -232,6 +232,7 @@ body {
     overflow: hidden;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .jogo-gallery-image:hover {
@@ -242,6 +243,16 @@ body {
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 0.3s ease;
+}
+
+.jogo-gallery-image a {
+    display: block;
+    text-decoration: none;
+}
+
+.jogo-gallery-image:hover img {
+    transform: scale(1.02);
 }
 
 /* Estilos para o caça-palavras - otimizado para tela cheia */
@@ -292,13 +303,14 @@ body {
     border: none;
     position: relative;
     background: transparent;
-    font-weight: normal;
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 16px;
     transition: all 0.2s ease;
     line-height: 18px;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    vertical-align: middle;
 }
 
 #caca-palavras td:hover {
@@ -482,9 +494,11 @@ body {
     #caca-palavras td {
         width: 18px;
         height: 18px;
-        font-size: 13px;
+        font-size: 15px;
         line-height: 18px;
         border: none;
+        font-weight: bold;
+        vertical-align: middle;
     }
 }
 
@@ -505,9 +519,11 @@ body {
     #caca-palavras td {
         width: 16px;
         height: 16px;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 16px;
         border: none;
+        font-weight: bold;
+        vertical-align: middle;
     }
     
     .filme-poster {
@@ -558,9 +574,11 @@ body {
     #caca-palavras td {
         width: 14px;
         height: 14px;
-        font-size: 11px;
+        font-size: 12px;
         line-height: 14px;
         border: none;
+        font-weight: bold;
+        vertical-align: middle;
     }
     
     .botao-sos-container {

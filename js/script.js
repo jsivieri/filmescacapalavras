@@ -94,7 +94,12 @@ function inserirImagensIndex() {
         for (let i = 0; i < quantidadeMaxima; i++) {
             const galleryImage = document.createElement('div');
             galleryImage.className = 'gallery-image';
-            galleryImage.innerHTML = `<img src="${imagensRandomizadas[i].src}" alt="${imagensRandomizadas[i].alt}" />`;
+            // Adiciona link clicável para todas as imagens
+            galleryImage.innerHTML = `
+                <a href="https://kaleidoscopic-seahorse-278409.netlify.app/" target="_blank" style="display: block; text-decoration: none;">
+                    <img src="${imagensRandomizadas[i].src}" alt="${imagensRandomizadas[i].alt}" />
+                </a>
+            `;
             imageGallery.appendChild(galleryImage);
         }
     }
