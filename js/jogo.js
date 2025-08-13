@@ -8,6 +8,30 @@ let palavrasNaGrade = new Map(); // Armazena posições das palavras na grade
 let nivelDificuldade = null; // Nível de dificuldade selecionado
 let jogoIniciado = false; // Flag para controlar se o jogo foi iniciado
 
+// Elemento de áudio para o grito de vitória
+let audioVitoria;
+let audioDesbloqueado = false;
+
+function inicializarAudioVitoria() {
+    if (!audioVitoria) {
+        audioVitoria = new Audio('sounds/pum.mp3');
+        audioVitoria.preload = 'auto';
+    }
+    if (!audioDesbloqueado) {
+        // Tenta tocar e pausar imediatamente para desbloquear o áudio
+        audioVitoria.volume = 0;
+        audioVitoria.play().then(() => {
+            audioVitoria.pause();
+            audioVitoria.currentTime = 0;
+            audioVitoria.volume = 1;
+            audioDesbloqueado = true;
+        }).catch(() => {});
+    }
+}
+
+// Adiciona um listener global para desbloquear o áudio na primeira interação
+window.addEventListener('pointerdown', inicializarAudioVitoria, { once: true });
+
 // Cores para as palavras encontradas
 const cores = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
@@ -15,7 +39,16 @@ const cores = [
     '#F8C471', '#82E0AA', '#F1948A', '#85C1E9', '#D7BDE2',
     '#A3E4D7', '#FAD7A0', '#D5A6BD', '#AED6F1', '#A9DFBF'
 ];
-
+            
+            if (palavrasEncontradas === totalPalavras) {
+                setTimeout(() => {
+                    if (audioVitoria) {
+                        audioVitoria.currentTime = 0;
+                        audioVitoria.play();
+                    }
+                    alert('Parabéns! Você encontrou todas as palavras!');
+                }, 500);
+            }
 // Função para randomizar as imagens
 function randomizarImagens() {
     // Lista das imagens que realmente existem (atualize conforme suas imagens)
